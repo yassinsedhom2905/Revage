@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - Be MODEST</title>
+
+    <style>
+        /* General styling */
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            background-color: #090909;
+            color: #ffffff;
+        }
+
+        /* Header styling */
+        header {
+            background-color: #000000;
+            padding: 10px 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+
+        header a {
+            color: rgb(2, 167, 2);
+            text-decoration: none;
+            font-size: 14px;
+            padding: 10px 20px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        header a:hover {
+            background-color: #ffffff;
+        }
+
+        /* Main section */
+        .main-section {
+            padding: 50px 20px;
+            max-width: 600px;
+            margin: 20px auto; /* Added margin for spacing */
+            background-color: #1c1c1c;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        }
+
+        h1 {
+            font-size: 24px;
+            margin-bottom: 10px;
+            color: #ffffff;
+        }
+
+        p {
+            font-size: 18px; /* Adjusted font size for readability */
+            color: #d3d3d3;
+            margin-bottom: 20px;
+        }
+
+        /* Contact form styling */
+        form {
+            display: inline-block;
+            text-align: center;
+            background-color: #141313;
+            padding: 5px;
+            border-radius: 20px;
+            box-shadow: 0 0 10px rgb(2, 2, 2);
+            margin-top: 0px;
+            width: 100%; /* Make form responsive */
+        }
+
+        input, textarea, button {
+            display: block;
+            width: calc(100% - 15px); /* Adjust width to account for padding */
+            margin: 10px 0; /* Unified margin */
+            padding: 1%;
+            font-size: 14px;
+            border-radius: 5px;
+        }
+
+        input, textarea {
+            background-color: #ffffff;
+            color: #040404;
+            border: 1px solid #444444;
+        }
+
+        button {
+            background-color: #000000;
+            color: rgb(1, 164, 28);
+            border: 1px solid #444444;
+            cursor: pointer;
+            font-size: 15px;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #3c3b88;
+        }
+
+        /* Footer styling */
+        footer {
+            margin-top: 30px;
+            color: #fefefe; /* Fixed color code */
+            font-size: 14px;
+        }
+
+        /* Social links styling */
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-links a {
+            color: #00b83d;
+            text-decoration: none;
+            font-size: 24px;
+            transition: color 0.3s ease;
+        }
+
+        .social-links a:hover {
+            color: #ffffff;
+        }
+    </style>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-database.js"></script>
+    <script>
+        // Firebase configuration copied from Firebase Console
+        var firebaseConfig = {
+            apiKey: "AIzaSyBZx8vSqIJxvFRyqduYhQrTuPinvM_RmQI",
+            authDomain: "contactus-c40b6.firebaseapp.com",
+            databaseURL: "https://contactus-c40b6-default-rtdb.firebaseio.com",
+            projectId: "contactus-c40b6",
+            storageBucket: "contactus-c40b6.appspot.com",
+            messagingSenderId: "442747548935",
+            appId: "1:442747548935:web:7fa6294418b9edb8e041a2"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+
+        // Reference to the Realtime Database
+        var database = firebase.database();
+
+        // Function to submit data to Firebase
+        function submitContactForm(event) {
+            event.preventDefault(); // Prevent the form from refreshing the page 
+            var name = document.getElementById("name").value;
+            var email = document.getElementById("email").value;
+            var message = document.getElementById("message").value;
+
+            // Save data to Firebase
+            database.ref('contacts').push({
+                name: name,
+                email: email,
+                message: message
+            }).then(function() {
+                alert("Thank you for reaching out! We'll get back to you soon.");
+            }).catch(function(error) {
+                alert("Error: " + error.message);
+            });
+
+            // Clear the form fields
+            document.getElementById("contactForm").reset();
+        }
+    </script>
+</head>
+<body>
+
+    <!-- Header with navigation links -->
+    <header>
+        <a href="home.html">Home</a>
+        <a href="shop.html">Shop</a>
+        <a href="contact.html">Contact</a>
+    </header>
+
+    <!-- Main Contact Section -->
+    <div class="main-section">
+        <h1>Contact Us</h1>
+        <p>We’d love to hear from you! Reach out with any questions, comments, or feedback.</p>
+        <form id="contactForm" onsubmit="submitContactForm(event)">
+            <input type="text" id="name" name="name" placeholder="Your Name" required aria-label="Your Name">
+            <input type="email" id="email" name="email" placeholder="Your Email" required aria-label="Your Email">
+            <textarea id="message" name="message" placeholder="Your Message" rows="4" required aria-label="Your Message"></textarea>
+            <button type="submit">Submit</button>
+        </form>
+
+        <div class="social-links">
+            <a href="https://www.instagram.com/anaselivanova/" target="_blank">Instagram</a>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        © 2024 Clothing Brand | All rights reserved.
+    </footer>
+</body>
+</html>
